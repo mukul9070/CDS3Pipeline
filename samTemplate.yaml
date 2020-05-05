@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 Description: S3 CD Stack
 
+Parameters:
+  BucketName:
+    Type: String
+    Default: storedphotostest
+    
 Resources:
   Bucket:
     Type: AWS::S3::Bucket
@@ -19,13 +24,13 @@ Resources:
               - DELETE
               - HEAD
             MaxAge: 3000
-      BucketName: storedphotostest
+      BucketName: !Ref BucketName
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
       NotificationConfiguration:
         LambdaConfigurations:
-          - Event: "s3:ObjectCreated:*"
+          - Event: "s3:ObjectCreated:Put"
             Filter:
               S3Key:
                 Rules:
@@ -33,13 +38,16 @@ Resources:
                     Value: .jpg
             Function: arn:aws:lambda:us-east-1:544746101696:function:CDTestStack-indexTest-15SGVDAK6MOG3
 
+  HelloLambdaPermissionFoobarpmuensS3:
+    DependsOn:
+      - !Ref BucketName
   S3InvokeLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
       FunctionName: CDTestStack-indexTest-15SGVDAK6MOG3
       Principal: s3.amazonaws.com
-      SourceArn: arn:aws:s3:::storedPhotosTest
+      SourceArn: !Sub arn:aws:s3:::${BucketName}
 
   LambdaRole:
     Type: AWS::IAM::Role
@@ -61,5 +69,8 @@ Resources:
                 Action:
                   - s3:Get*
                 Resource:
-                  - arn:aws:s3:::storedPhotosTest
-                  - arn:aws:s3:::storedPhotosTest/*
+                  - !Sub arn:aws:s3:::${BucketName}
+                  - !Sub arn:aws:s3:::${BucketName}/*
+   !Ref BucketName:
+     DependsOn:
+       - HelloLambdaPermissionFoobarpmuensS3
