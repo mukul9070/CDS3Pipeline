@@ -6,9 +6,6 @@ Resources:
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
-        WebsiteConfiguration:
-          IndexDocument: index.html
       CorsConfiguration:
         CorsRules:
           - AllowedOrigins:
@@ -23,6 +20,9 @@ Resources:
               - HEAD
             MaxAge: 3000
       BucketName: storedPhotosTest
+      AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: "s3:ObjectCreated:*"
