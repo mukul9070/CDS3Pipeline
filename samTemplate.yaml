@@ -38,10 +38,9 @@ Resources:
                     Value: .jpg
             Function: arn:aws:lambda:us-east-1:544746101696:function:CDTestStack-indexTest-15SGVDAK6MOG3
 
-  HelloLambdaPermissionFoobarpmuensS3:
+  S3InvokeLambdaPermission:
     DependsOn:
       - !Ref BucketName
-  S3InvokeLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
@@ -71,6 +70,6 @@ Resources:
                 Resource:
                   - !Sub arn:aws:s3:::${BucketName}
                   - !Sub arn:aws:s3:::${BucketName}/*
-   !Sub ${BucketName}:
-     DependsOn:
-       - HelloLambdaPermissionFoobarpmuensS3
+   #storedphotostest:
+     #DependsOn:
+       #- HelloLambdaPermissionFoobarpmuensS3
