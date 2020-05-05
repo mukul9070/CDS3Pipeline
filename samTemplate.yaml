@@ -21,8 +21,8 @@ Resources:
             MaxAge: 3000
       BucketName: storedPhotosTest
       AccessControl: PublicRead
-        WebsiteConfiguration:
-          IndexDocument: index.html
+      WebsiteConfiguration:
+        IndexDocument: index.html
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: "s3:ObjectCreated:*"
