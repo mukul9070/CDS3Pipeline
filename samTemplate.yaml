@@ -23,7 +23,7 @@ Resources:
               - DELETE
               - HEAD
             MaxAge: 3000
-      BucketName: !Ref Bucketname
+      BucketName: !Ref BucketName
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
