@@ -19,7 +19,7 @@ Resources:
               - DELETE
               - HEAD
             MaxAge: 3000
-      BucketName: storedPhotosTest
+      BucketName: storedphotostest
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
